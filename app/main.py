@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from app.ingest import ingest_document
+from app.rag import index_sample_document, retrieve_context
 
 app = FastAPI(
     title="RAG API with FastAPI",
     description="A Retrieval-Augmented Generation API built with Python and FastAPI.",
-    version="0.2.0",
+    version="0.3.0",
 )
 
 
@@ -27,3 +28,13 @@ def ingest_sample_document():
         "chunk_count": len(chunks),
         "chunks": chunks,
     }
+
+
+@app.post("/index/sample")
+def index_sample():
+    return index_sample_document()
+
+
+@app.get("/retrieve")
+def retrieve(query: str):
+    return retrieve_context(query)
