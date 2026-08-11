@@ -1,4 +1,7 @@
 import chromadb
+from openai import OpenAI
+
+from app.config import OPENAI_API_KEY, OPENAI_MODEL
 from app.ingest import ingest_document
 
 
@@ -58,4 +61,48 @@ def retrieve_context(query: str, n_results: int = 3) -> dict:
         "result_count": len(documents),
         "ids": ids,
         "documents": documents,
+    }
+
+
+def generate_answer(question: str) -> dict:
+    if not OPENAI_API_KEY:
+        raise ValueError("OPENAI_API_KEY is missing. Add it to your .env file.")
+
+    retrieval = retrieve_context(question)
+    documents = retrieval["documents"]
+
+    context = "\n\n".join(documents)
+
+    prompt = f"""
+You are a helpful AI assistant answering questions using only the provided context.
+
+If the answer is not in the context, say:
+"I do not have enough information in the provided context to answer that."
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:
+"""
+
+    client = OpenAI(api_key=OPENAI_API_KEY)
+
+    response = client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[
+            {"role": "system", "content": "Answer only from the provided context."},
+            {"role": "user", "content": prompt},
+        ],
+        temperature=0,
+    )
+
+    answer = response.choices[0].message.content
+
+    return {
+        "question": question,
+        "answer": answer,
+        "sources": documents,
     }

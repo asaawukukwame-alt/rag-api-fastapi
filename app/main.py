@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from app.ingest import ingest_document
-from app.rag import index_sample_document, retrieve_context
+from app.rag import index_sample_document, retrieve_context, generate_answer
+from app.schemas import AskRequest, AskResponse
 
 app = FastAPI(
     title="RAG API with FastAPI",
     description="A Retrieval-Augmented Generation API built with Python and FastAPI.",
-    version="0.3.0",
+    version="0.4.0",
 )
 
 
@@ -38,3 +39,8 @@ def index_sample():
 @app.get("/retrieve")
 def retrieve(query: str):
     return retrieve_context(query)
+
+
+@app.post("/ask", response_model=AskResponse)
+def ask_question(request: AskRequest):
+    return generate_answer(request.question)
