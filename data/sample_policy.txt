@@ -1,0 +1,13 @@
+Company AI Policy
+
+Employees may use approved AI tools to support research, drafting, summarization, coding assistance, and data analysis.
+
+Employees must not upload confidential customer data, private financial records, passwords, API keys, medical records, or legal documents into public AI tools.
+
+AI-generated outputs must be reviewed by a human before being used in business decisions.
+
+Any AI system used for customer-facing decisions must be tested for accuracy, fairness, privacy, and security.
+
+Developers must store API keys in environment variables and must never commit secrets to GitHub.
+
+All AI applications should include logging, error handling, and documentation.
