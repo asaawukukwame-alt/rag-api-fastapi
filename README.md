@@ -1,19 +1,19 @@
 # RAG API with FastAPI
 
-A Retrieval-Augmented Generation API built with Python, FastAPI, ChromaDB, and OpenAI.
+A Retrieval-Augmented Generation API built with Python, FastAPI, ChromaDB, Docker, GitHub Actions, and the OpenAI API.
 
-This project demonstrates how to build a backend AI application that can ingest documents, store searchable context in a vector database, retrieve relevant chunks, and generate grounded answers using an LLM.
+This project demonstrates how to build a backend AI application that can ingest a document, split it into chunks, store searchable context in a vector database, retrieve relevant chunks, and generate grounded answers using an LLM.
 
 ## Project Status
 
-- ✅ FastAPI application foundation
-- ✅ Document ingestion and chunking
-- ✅ ChromaDB vector storage and retrieval
-- ✅ OpenAI-powered answer generation
-- ✅ API error handling
-- ✅ Automated tests with pytest
-- ✅ Docker configuration
-- ✅ GitHub Actions CI
+- FastAPI application foundation complete
+- Document ingestion and chunking complete
+- ChromaDB vector storage and retrieval complete
+- OpenAI-powered answer generation complete
+- API error handling complete
+- Automated tests with pytest complete
+- Docker configuration complete
+- GitHub Actions CI complete
 
 ## Tech Stack
 
@@ -29,20 +29,22 @@ This project demonstrates how to build a backend AI application that can ingest 
 
 ## Architecture
 
-```text
-User Question
-     |
-     v
-FastAPI /ask endpoint
-     |
-     v
-Retrieve relevant chunks from ChromaDB
-     |
-     v
-Build grounded prompt with retrieved context
-     |
-     v
-OpenAI model generates answer
-     |
-     v
-Return answer + source chunks
+User question goes to the FastAPI `/ask` endpoint. The API retrieves relevant chunks from ChromaDB, builds a grounded prompt with that context, sends the prompt to the OpenAI model, and returns an answer with source chunks.
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | Confirms the API is running |
+| GET | `/health` | Health check endpoint |
+| GET | `/ingest/sample` | Loads and chunks the sample policy document |
+| POST | `/index/sample` | Indexes the sample document into ChromaDB |
+| GET | `/retrieve?query=...` | Retrieves relevant document chunks |
+| POST | `/ask` | Generates an answer using retrieved context |
+
+## Example Question
+
+```json
+{
+  "question": "What should employees not upload into public AI tools?"
+}
