@@ -4,6 +4,16 @@ A Retrieval-Augmented Generation API built with Python, FastAPI, ChromaDB, Docke
 
 This project demonstrates how to build a backend AI application that can ingest a document, split it into chunks, store searchable context in a vector database, retrieve relevant chunks, and generate grounded answers using an LLM.
 
+## Live Demo
+
+Live API documentation:
+
+https://rag-api-fastapi-1.onrender.com/docs#/
+
+Health check:
+
+https://rag-api-fastapi-1.onrender.com/health
+
 ## Project Status
 
 - FastAPI application foundation complete
